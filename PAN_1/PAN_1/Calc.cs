@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PAN_1
 {
-    class Calc
+    public class Calc
     {
         public Calc() { }
         public int Sum (int a, int b)

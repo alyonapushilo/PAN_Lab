@@ -1,0 +1,11 @@
+D:\4_1\Test\TestIKEA\TestIKEA\obj\Debug\TestIKEA.csprojResolveAssemblyReference.cache
+D:\4_1\Test\TestIKEA\TestIKEA\bin\Debug\TestIKEA.dll
+D:\4_1\Test\TestIKEA\TestIKEA\bin\Debug\TestIKEA.pdb
+D:\4_1\Test\TestIKEA\TestIKEA\bin\Debug\nunit.framework.dll
+D:\4_1\Test\TestIKEA\TestIKEA\bin\Debug\WebDriver.dll
+D:\4_1\Test\TestIKEA\TestIKEA\bin\Debug\WebDriver.Support.dll
+D:\4_1\Test\TestIKEA\TestIKEA\bin\Debug\nunit.framework.xml
+D:\4_1\Test\TestIKEA\TestIKEA\bin\Debug\WebDriver.xml
+D:\4_1\Test\TestIKEA\TestIKEA\bin\Debug\WebDriver.Support.xml
+D:\4_1\Test\TestIKEA\TestIKEA\obj\Debug\TestIKEA.dll
+D:\4_1\Test\TestIKEA\TestIKEA\obj\Debug\TestIKEA.pdb

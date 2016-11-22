@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" name="TestIKEA.DLL" fullname="D:/4_1/Test/TestIKEA/TestIKEA/bin/Debug/TestIKEA.DLL" testcasecount="1" result="Failed" start-time="2016-11-21 21:53:22Z" end-time="2016-11-21 21:54:02Z" duration="40.295224" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="1" random-seed="1791268734">
+  <command-line><![CDATA[nunitlite-runner.exe  TestIKEA.dll]]></command-line>
+  <filter />
+  <test-suite type="Assembly" id="1002" name="TestIKEA.DLL" fullname="D:/4_1/Test/TestIKEA/TestIKEA/bin/Debug/TestIKEA.DLL" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2016-11-21 21:53:22Z" end-time="2016-11-21 21:54:02Z" duration="40.295224" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="1">
+    <environment framework-version="3.5.0.0" clr-version="4.0.30319.19408" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="D:\4_1\Test\TestIKEA\TestIKEA\bin\Debug" machine-name="ADMINISTRATOR" user="Администратор" user-domain="ADMINISTRATOR" culture="ru-RU" uiculture="ru-RU" os-architecture="x86" />
+    <settings>
+      <setting name="WorkDirectory" value="D:\4_1\Test\TestIKEA\TestIKEA\bin\Debug" />
+      <setting name="NumberOfTestWorkers" value="2" />
+    </settings>
+    <properties>
+      <property name="_PID" value="2276" />
+      <property name="_APPDOMAIN" value="nunitlite-runner.exe" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="TestSuite" id="1003" name="TestIKEA" fullname="TestIKEA" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2016-11-21 21:53:22Z" end-time="2016-11-21 21:54:02Z" duration="40.264325" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="1">
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1004" name="Tests" fullname="TestIKEA.Tests" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2016-11-21 21:53:22Z" end-time="2016-11-21 21:54:02Z" duration="40.234582" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="1">
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestFixture" id="1000" name="Tests" fullname="TestIKEA.Tests.Tests" classname="TestIKEA.Tests.Tests" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2016-11-21 21:53:22Z" end-time="2016-11-21 21:54:02Z" duration="40.213029" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="1">
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-case id="1001" name="CreateShoppingList" fullname="TestIKEA.Tests.Tests.CreateShoppingList" methodname="CreateShoppingList" classname="TestIKEA.Tests.Tests" runstate="Runnable" seed="2015725928" result="Failed" start-time="2016-11-21 21:53:22Z" end-time="2016-11-21 21:54:02Z" duration="40.175775" asserts="1">
+            <failure>
+              <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+              <stack-trace><![CDATA[в TestIKEA.Tests.Tests.CreateShoppingList() в d:\4_1\Test\TestIKEA\TestIKEA\Tests\Tests.cs:строка 87
+]]></stack-trace>
+            </failure>
+            <output><![CDATA[Login Page opened
+Номер 1
+]]></output>
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

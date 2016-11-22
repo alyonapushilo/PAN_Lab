@@ -60,12 +60,25 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Driver\DriverInstance.cs" />
+    <Compile Include="Pages\AbstractPage.cs" />
+    <Compile Include="Pages\LoginPage.cs" />
+    <Compile Include="Pages\MainPage.cs" />
+    <Compile Include="Pages\ProductAvailabilityPage.cs" />
+    <Compile Include="Pages\ProductPage.cs" />
+    <Compile Include="Pages\ProfilePage.cs" />
+    <Compile Include="Pages\SearchPage.cs" />
+    <Compile Include="Pages\ShoppingListPage.cs" />
+    <Compile Include="Pages\UpdateStorePage.cs" />
+    <Compile Include="Pages\UpdateUserPage.cs" />
+    <Compile Include="Steps\Steps.cs" />
+    <Compile Include="Tests\Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

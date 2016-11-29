@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 using System;
 
 namespace TestIKEA.Pages
@@ -7,13 +8,13 @@ namespace TestIKEA.Pages
     class ProductAvailabilityPage:AbstractPage
     {
 
-        private const string BASE_URL = "http://www.ikea.com/ru/ru/catalog/stockcheck/?icid=itl|ru|top_links|201507201030208972_3";
+        private const string BASE_URL = "http://www.ikea.com/ru/ru/catalog/stockcheck/";
 
         [FindsBy(How = How.XPath, Using = "//*[@id='stocksearch']/div[1]/div[2]/input")]
         private IWebElement inputSearchText;
 
-        [FindsBy(How = How.XPath, Using = "//*[@id='ikeaStoreNumber1']/option[5]")]
-        private IWebElement inputStore;
+        [FindsBy(How = How.XPath, Using = "//*[@id='ikeaStoreNumber1']")]
+        private IWebElement selectStore;
 
         [FindsBy(How = How.XPath, Using = "//*[@id='jsButton_StockSearch_01']/div[2]/input")]
         private IWebElement buttonOk;
@@ -25,22 +26,26 @@ namespace TestIKEA.Pages
             PageFactory.InitElements(this.driver, this);
         }
 
-        public override void OpenPage()
+        public void OpenPage()
         {
             driver.Navigate().GoToUrl(BASE_URL);
         }
 
-        public void PrdctAvailability(string firm, string product)
+        public void ProductAvailability(string firm, string product, string store)
         {
             inputSearchText.SendKeys(firm + product);
-            inputStore.Click();
+            var selectElement = new SelectElement(selectStore);
+            selectElement.SelectByText(store);
             buttonOk.Click();
         }
 
-        public string GetHeader()
+        public bool CheckProductAvailability()
         {
-            IWebElement header = driver.FindElement(By.Id("graph_main_comment"));
-            return header.Text;
+            string header = driver.FindElement(By.Id("graph_main_comment")).Text;
+            string msg = "Товар будет в наличии";
+            if (string.Compare(header.Trim().ToLower(), 0, msg.ToLower(), 0, msg.Length) == 0)
+                return true;
+            return false;
         }
 
     }

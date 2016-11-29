@@ -24,7 +24,6 @@ namespace TestIKEA.Pages
         [FindsBy(How = How.XPath, Using = "//*[@id='lnkMainMenu1Header']/span/span/span")]
         private IWebElement buttonAllProduct;
 
-        [FindsBy(How = How.Id, Using = "txt21")]
         private IWebElement link;
 
         
@@ -34,7 +33,7 @@ namespace TestIKEA.Pages
             PageFactory.InitElements(this.driver, this);
         }
 
-        public override void OpenPage()
+        public void OpenPage()
         {
             driver.Navigate().GoToUrl(BASE_URL);
         }
@@ -43,6 +42,13 @@ namespace TestIKEA.Pages
         {
             inputSearch.SendKeys(firm + product);
             buttonSearch.Click();
+            System.Threading.Thread.Sleep(2000);
+        }
+
+        public void Search(string productNumber)
+        {
+            inputSearch.SendKeys(productNumber);
+            buttonSearch.Click();
         }
 
         public void OpenShoppingList()
@@ -50,11 +56,12 @@ namespace TestIKEA.Pages
             buttonShoppingList.Click();
         }
 
-        public void OpenProductPage()
+        public void OpenProductPage(string pageName)
 
         {
             buttonAllProduct.Click();
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(2000);
+            link.FindElement(By.LinkText(pageName));
             link.Click();
             System.Threading.Thread.Sleep(1000);
         }

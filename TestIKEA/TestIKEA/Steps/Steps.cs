@@ -35,7 +35,7 @@ namespace TestIKEA.Steps
             Pages.ProfilePage profilePage = new Pages.ProfilePage(driver);
             profilePage.OpenPage();
             profilePage.ClickOnButtonExit();
-            System.Threading.Thread.Sleep(2000);
+            
         }
         public bool IsLoggedOutIKEA()
         {
@@ -48,22 +48,21 @@ namespace TestIKEA.Steps
             Pages.MainPage mainPage = new Pages.MainPage(driver);
             mainPage.OpenPage();
             mainPage.Search(product, type);
-            System.Threading.Thread.Sleep(2000);
+            
         }
 
-        public int IsSearch(string firm, string product)
+        public bool IsFound(string firm, string product)
         {
             Pages.ProductPage productPage = new Pages.ProductPage(driver);
-            string title = productPage.GetTitle();
-            return string.Compare(title.Trim().ToLower(), 0, (firm + product).ToLower(), 0, (firm + product).Length);
+            return productPage.CheckSearch(firm, product);
         }
 
-        public void AddProduct()
+        public void AddProduct(string productNumber)
         {
             Pages.ProductPage productPage = new Pages.ProductPage(driver);
-            productPage.OpenPage();
+            productPage.OpenPage(productNumber);
             productPage.Add();
-            System.Threading.Thread.Sleep(5000);
+            
         }
 
         public bool IsAddedProduct()
@@ -72,18 +71,17 @@ namespace TestIKEA.Steps
             return (productPage.CheckAdd().Trim().Equals("Добавленные товары"));
         }
 
-        public void DeleteProduct()
+        public void DeleteProduct(string number)
         {
             Pages.ShoppingListPage listPage = new Pages.ShoppingListPage(driver);
-            listPage.DeleteProduct();
-            System.Threading.Thread.Sleep(2000);
+            listPage.DeleteProduct(number);
+            
         }
 
-        public int IsDeletedProduct()
+        public bool IsDeletedProduct()
         {
             Pages.ShoppingListPage listPage = new Pages.ShoppingListPage(driver);
-            string msg = "Ваш список покупок пуст";
-            return string.Compare(listPage.CheckDeleteProduct().Trim().ToLower(), 0, msg.ToLower(), 0, msg.Length);
+            return listPage.CheckDeleteProduct();
         }
 
         public void OpenShoppingList()
@@ -93,36 +91,36 @@ namespace TestIKEA.Steps
             mainPage.OpenShoppingList();
         }
 
-        public void CreateShoppingListLogout()
+        public void CreateShoppingListWithoutAuthorization()
         {
             Pages.ShoppingListPage listPage = new Pages.ShoppingListPage(driver);
-            listPage.CreateListLogout();
+            listPage.CreateListWithoutAuthorization();
         }
 
-        public bool IsCreatedShoppingListLogout()
+        public bool IsCreatedShoppingListWithoutAuthorization()
         {
             Pages.ShoppingListPage listPage = new Pages.ShoppingListPage(driver);
-            return (listPage.CheckCreateListLogout().Trim().ToLower().Equals("войти в систему"));
+            return (listPage.CheckCreateListWithoutAuthorization().Trim().ToLower().Equals("войти в систему"));
         }
 
-        public void CreateShoppingList()
+        public void CreateShoppingList(string listName)
         {
             Pages.ShoppingListPage listPage = new Pages.ShoppingListPage(driver);
-            listPage.CreateList();
-            System.Threading.Thread.Sleep(2000);
+            listPage.CreateList(listName);
+           
         }
 
-        public bool IsCreatedShoppingList()
+        public bool IsCreatedShoppingList(string listName)
         {
             Pages.ShoppingListPage listPage = new Pages.ShoppingListPage(driver);
-            return (listPage.CheckCreateList().Trim().Equals("Номер 1"));
+            return (listPage.CheckCreateList().Trim().Equals(listName));
         }
 
         public void DeleteShoppingList()
         {
             Pages.ShoppingListPage listPage = new Pages.ShoppingListPage(driver);
             listPage.DeleteList();
-            System.Threading.Thread.Sleep(2000);
+            
         }
 
         public bool IsDeletedShoppingList()
@@ -131,11 +129,11 @@ namespace TestIKEA.Steps
             return (listPage.CheckDeleteList().Equals("Список «{listname}» был удален"));
         }
 
-        public void RenameShoppingList()
+        public void RenameShoppingList(string listName)
         {
             Pages.ShoppingListPage listPage = new Pages.ShoppingListPage(driver);
-            listPage.RenameList();
-            System.Threading.Thread.Sleep(2000);
+            listPage.RenameList(listName);
+    
         }
 
         public bool IsRenamedShoppingList()
@@ -144,54 +142,53 @@ namespace TestIKEA.Steps
             return (listPage.CheckRenameList().Equals("Список был переименован"));
         }
 
-        public void ProductAvailability(string firm, string product)
+        public void ProductAvailability(string firm, string product,string store)
         {
             Pages.ProductAvailabilityPage page = new Pages.ProductAvailabilityPage(driver);
             page.OpenPage();
-            page.PrdctAvailability(firm, product);
-            System.Threading.Thread.Sleep(2000);
+            page.ProductAvailability(firm, product, store);
+
         }
 
-        public int IsProductAvailable(string firm, string product)
+        public bool IsProductAvailable(string firm, string product)
         {
-            Pages.ProductAvailabilityPage page = new Pages.ProductAvailabilityPage(driver);
-            string msg = "Товар будет в наличии";
-            return string.Compare(page.GetHeader().Trim().ToLower(), 0, msg.ToLower(), 0, msg.Length);
+            Pages.ProductAvailabilityPage page = new Pages.ProductAvailabilityPage(driver);            
+            return page.CheckProductAvailability();
         }
 
-        public void Navigation ()
+        public void GoToPage(string pageName)
         {
             Pages.MainPage mainPage = new Pages.MainPage(driver);
             mainPage.OpenPage();
-            mainPage.OpenProductPage();
+            mainPage.OpenProductPage(pageName);
         }
 
-       public bool IsNavigation(string title)
+       public bool ItPassedToPage(string pageName)
         {
-           return driver.Title.Equals(title);
+            string title = driver.Title;
+            if (string.Compare(title.Trim().ToLower(), 0, pageName.ToLower(), 0, pageName.Length) == 0)
+                return true;
+            return false;
         }
 
-        public void UpdatePrivatePersonal()
+       public void ChangeUsername(string username)
        {
            Pages.UpdateUserPage updatePage = new Pages.UpdateUserPage(driver);
            updatePage.OpenPage();
-           updatePage.Update();
+           updatePage.Update(username);
        }
 
-        public bool IsUpdatedPrivatePersonal()
+       public bool IsUpdatedUsername()
         {
-            Pages.ProfilePage profilePage = new Pages.ProfilePage(driver);            
-            return (profilePage.CheckUpdatePrivatePersonal().Trim().Equals("Ваша личная информация изменена"));
+            Pages.ProfilePage profilePage = new Pages.ProfilePage(driver);
+            return (profilePage.CheckChangeUsername().Trim().Equals("Ваша личная информация изменена"));
         }
 
         public void UpdateStore(string store)
         {
             Pages.UpdateStorePage updatePage = new Pages.UpdateStorePage(driver);
             updatePage.OpenPage();
-            if (store.Equals("ИКЕА Казань"))
-                updatePage.ClickKazan();
-            else
-                updatePage.ClickOmsk();
+            updatePage.SelectStore(store);
             updatePage.Save();
         }
 
@@ -209,19 +206,19 @@ namespace TestIKEA.Steps
             searchPage.ClickButtonCompare();
         }
 
-        public bool IsCompareProduct()
+        public bool IsComparedProducts()
         {
             Pages.SearchPage searchPage = new Pages.SearchPage(driver);
             return (searchPage.CheckCompareProduct().Equals("Сравнение"));
         }
 
-        public void AddProductByNumber()
+        public void AddProductByNumber(string productNumber)
         {
-            Pages.ShoppingListPage listPage= new Pages.ShoppingListPage(driver);           
-            listPage.AddProduct();
+            Pages.ShoppingListPage listPage= new Pages.ShoppingListPage(driver);
+            listPage.AddProduct(productNumber);
         }
 
-        public bool IsaddedProductByNumber()
+        public bool IsAddedProductByNumber()
         {
             Pages.ShoppingListPage listPage = new Pages.ShoppingListPage(driver);
             return (listPage.CheckAddProduct().Equals("ВЁРДА"));

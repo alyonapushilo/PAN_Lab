@@ -11,7 +11,7 @@ namespace TestIKEA.Pages
     public abstract class AbstractPage
     {
         protected IWebDriver driver;
-        public abstract void OpenPage();
+        
 
         public AbstractPage(IWebDriver driver)
         {

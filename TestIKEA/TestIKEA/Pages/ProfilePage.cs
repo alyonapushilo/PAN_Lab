@@ -10,7 +10,7 @@ namespace TestIKEA.Pages
 {
     public class ProfilePage:AbstractPage
     {
-        private const string BASE_URL = "https://secure.ikea.com/webapp/wcs/stores/servlet/MyProfile?langId=-31&storeId=23&krypto=n3hIM%2BbloffJq1iKb62b0JIFN%2FnoFk6%2FG7gP0AgpjkssMaxIHaVgZXns9AypDOHTjOuBhuHkY%2BxZh0HTumIvQ4jd4llxRHeGfStzuZgpAT1T%2BgVys%2BtFD%2BbWEejFnW0HD%2FCSQKmBrm8oWl2JChVhCg%2Bu5ita%2BfbGeP8wXWrIk0PXnNMxL1Yuz8a1pOSlqtfoV0UpFAkDRsKFUO0e8AiijAQioL%2FmX73p8IFmMex4iu8txl0A%2Fm9vPyHdLo%2Fkwrz1&ddkey=https%3ALogon";
+        private const string BASE_URL = "https://secure.ikea.com/webapp/wcs/stores/servlet/LogonForm";
 
         [FindsBy(How = How.Id, Using = "link_header_logout")]
         private IWebElement buttonExit;
@@ -26,7 +26,7 @@ namespace TestIKEA.Pages
             PageFactory.InitElements(this.driver, this);
         }
 
-        public override void OpenPage()
+        public void OpenPage()
         {
             driver.Navigate().GoToUrl(BASE_URL);
         }
@@ -34,6 +34,7 @@ namespace TestIKEA.Pages
         public void ClickOnButtonExit()
         {
             buttonExit.Click();
+            System.Threading.Thread.Sleep(2000);
         }
 
         public string CheckLogout()
@@ -43,7 +44,7 @@ namespace TestIKEA.Pages
             return linkLoggedOff.Text;
         }
 
-        public string CheckUpdatePrivatePersonal()
+        public string CheckChangeUsername()
         {
             IWebElement messageBox = driver.FindElement(By.XPath("//*[@id='ppMessageBox']/div[2]/p"));
             return messageBox.Text;

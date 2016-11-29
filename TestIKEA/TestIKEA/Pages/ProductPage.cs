@@ -6,36 +6,38 @@ namespace TestIKEA.Pages
 {
     public class ProductPage:AbstractPage
     {
-        private const string BASE_URL = "http://www.ikea.com/ru/ru/catalog/products/10289246/?query=ВЁРДА+Нож+универсальный";
-
         [FindsBy(How = How.Id, Using = "name")]
         private IWebElement productTitle;
 
-        [FindsBy(How = How.XPath, Using = "//*[@id='jsButton_saveToList_lnk']/input")]
+        [FindsBy(How = How.CssSelector, Using = "#jsButton_saveToList_lnk > input[type='button']")]
         private IWebElement buttonAddToList;
-
 
         public ProductPage(IWebDriver driver):base(driver)
         {
             PageFactory.InitElements(this.driver, this);
+
         }
 
-        public override void OpenPage()
+        public void OpenPage(string productNumber)
         {
-            driver.Navigate().GoToUrl(BASE_URL);
+            Pages.MainPage mainPage = new MainPage(driver);
+            mainPage.OpenPage();
+            mainPage.Search(productNumber);            
         }
 
-        public string GetTitle()
+        public bool CheckSearch(string firm, string product)
         {
-            return driver.Title;
+            string title = driver.Title;
+            if (string.Compare(title.Trim().ToLower(), 0, (firm + product).ToLower(), 0, (firm + product).Length)==0)
+                return true;
+            return false;
         }
 
         public void Add()
         {
             buttonAddToList.Click();
+            System.Threading.Thread.Sleep(5000);
         }
-
-
 
         public string CheckAdd()
         {

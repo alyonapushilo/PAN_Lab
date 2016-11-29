@@ -6,7 +6,7 @@ namespace TestIKEA.Pages
 {
     class ShoppingListPage:AbstractPage
     {
-        private const string BASE_URL = "http://www.ikea.com/webapp/wcs/stores/servlet/InterestItemDisplay?storeId=23&langId=-31";
+        private const string BASE_URL = "http://www.ikea.com/webapp/wcs/stores/servlet/InterestItemDisplay";
 
         [FindsBy(How = How.XPath, Using = "//*[@id='jsButton_ShoppingList_11']/div[2]/input")]
         private IWebElement buttonCreateList;
@@ -24,8 +24,7 @@ namespace TestIKEA.Pages
         private IWebElement inputListNewName;
 
         private IWebElement buttonRename;
-
-        [FindsBy(How = How.Id, Using = "removeLink_3345208")]
+        
         private IWebElement buttonDeleteProduct;
 
         [FindsBy(How = How.Id, Using = "partNumber")]
@@ -41,28 +40,28 @@ namespace TestIKEA.Pages
             buttonCreateList = driver.FindElement(By.Id("jsButton_ShoppingList_11")).FindElement(By.TagName("input"));
         }
 
-        public override void OpenPage()
+        public void OpenPage()
         {
             driver.Navigate().GoToUrl(BASE_URL);
         }
 
-        public void CreateListLogout()
+        public void CreateListWithoutAuthorization()
         {
             buttonCreateList.Click();
         }
 
-        public string CheckCreateListLogout()
+        public string CheckCreateListWithoutAuthorization()
         {
             IWebElement message = driver.FindElement(By.Id("slPopupH1"));
             return message.Text;
         }
 
-        public void CreateList()
+        public void CreateList(string listName)
         {
             buttonCreateList.Click();
             System.Threading.Thread.Sleep(2000);
             inputListName = driver.FindElement(By.Id("listName"));
-            inputListName.SendKeys("Номер 1");
+            inputListName.SendKeys(listName);
             System.Threading.Thread.Sleep(2000);
             buttonCreate = driver.FindElement(By.XPath("//*[@id='jsButton_shopListPopup']/div[2]/input"));
             buttonCreate.Click();
@@ -82,6 +81,7 @@ namespace TestIKEA.Pages
             System.Threading.Thread.Sleep(2000);
             buttonDelete = driver.FindElement(By.XPath("//*[@id='jsButton_shopListPopup']/div[2]/input"));
             buttonDelete.Click();
+            System.Threading.Thread.Sleep(2000);
         }
 
         public string CheckDeleteList()
@@ -90,15 +90,16 @@ namespace TestIKEA.Pages
             return message.Text;   
         }
 
-        public void RenameList()
+        public void RenameList(string listName)
         {
             buttonRenameList = driver.FindElement(By.Id("btnRenameList"));
             buttonRenameList.Click();
             System.Threading.Thread.Sleep(1000);
             inputListNewName = driver.FindElement(By.Id("listName"));
-            inputListNewName.SendKeys("Список 1");            
+            inputListNewName.SendKeys(listName);            
             buttonRename = driver.FindElement(By.Id("jsButton_shopListPopup_4")).FindElement(By.TagName("input"));
             buttonRename.Click();
+            System.Threading.Thread.Sleep(2000);
         }
 
         public string CheckRenameList()
@@ -108,21 +109,25 @@ namespace TestIKEA.Pages
         }
 
 
-        public void DeleteProduct()
+        public void DeleteProduct(string number)
         {
-            buttonDeleteProduct.Click();
+            driver.FindElement(By.Id("tr_"+number)).FindElement(By.LinkText("Удалить")).Click();
+            System.Threading.Thread.Sleep(2000);
         }
 
-        public string CheckDeleteProduct()
-        {
-            IWebElement message = driver.FindElement(By.Id("emptyListMsg"));
-            return message.Text;
+        public bool CheckDeleteProduct()
+        {                       
+            string message = driver.FindElement(By.Id("emptyListMsg")).Text;            
+            string msg = "Ваш список покупок пуст";
+            if (string.Compare(message.Trim().ToLower(), 0, msg.ToLower(), 0, msg.Length) == 0)
+                return true;
+            return false;            
         }
 
-        public void AddProduct()
+        public void AddProduct(string productNumber)
         {
             inputPartNumber.Click();
-            inputPartNumber.SendKeys("102.892.46");
+            inputPartNumber.SendKeys(productNumber);
             buttonAddProduct.Click();
         }
 

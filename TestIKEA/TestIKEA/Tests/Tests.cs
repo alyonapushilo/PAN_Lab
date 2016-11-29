@@ -9,12 +9,16 @@ namespace TestIKEA.Tests
 
         private const string USEREMAIL = "test-user_bstu@mail.ru";
         private const string USERNAME = "test_user";
+        private const string USERNAME_2 = "test_user";
         private const string PASSWORD = "test123";
         private const string FIRM = "ВЁРДА ";
         private const string PRODUCT = "Нож универсальный";
-        private const string TITLE = "Чай и кофе - Кружки и чашки & Термосы - IKEA";
+        private const string PRODUCTNUMBER = "00149831";
+        private const string PAGENAME = "Чай и кофе";       
         private const string STORE_1 = "ИКЕА Казань";
-        private const string STORE_2 = "ИКЕА Омск";
+        private const string STORE_2 = "ИКЕА Омск";        
+        private const string LISTNAME = "Номер 1";
+        private const string LISTNAME_2 = "Номер 2";
 
         [SetUp]
         public void Init()
@@ -28,7 +32,7 @@ namespace TestIKEA.Tests
             steps.CloseBrowser();
         }
 
-        [Test]//+
+        [Test]
         public void OneCanLoginIKEA()
         {
             steps.LoginIKEA(USEREMAIL, PASSWORD);
@@ -37,7 +41,7 @@ namespace TestIKEA.Tests
         }
 
 
-        [Test]//+
+        [Test]
         public void OneCanLogoutIKEA()
         {
             steps.LoginIKEA(USEREMAIL, PASSWORD);
@@ -45,37 +49,37 @@ namespace TestIKEA.Tests
             Assert.True(steps.IsLoggedOutIKEA());
         }
 
-        [Test]//+
+        [Test]
         public void SearchProduct()
         {
             steps.SearchProduct(FIRM, PRODUCT);
-            Assert.AreEqual(0, steps.IsSearch(FIRM, PRODUCT));
-        }
-
-        [Test]//+
-        public void AddProductToList()
-        {
-            steps.AddProduct();
-            Assert.True(steps.IsAddedProduct());
-            steps.OpenShoppingList();
-            steps.DeleteProduct();
+            Assert.True(steps.IsFound(FIRM, PRODUCT));
         }
 
         [Test]
-        public void DeleteProductToList()
-        {
-            steps.AddProduct();
+        public void AddProductToList()
+        {            
+            steps.AddProduct(PRODUCTNUMBER);
+            Assert.True(steps.IsAddedProduct());
             steps.OpenShoppingList();
-            steps.DeleteProduct();
-            Assert.AreEqual(0, steps.IsDeletedProduct());
+            steps.DeleteProduct(PRODUCTNUMBER);
         }
 
-        [Test]//+
-        public void CreateShoppingListLogout()
+        [Test]
+        public void DeleteProductFromList()
+        {
+            steps.AddProduct(PRODUCTNUMBER);
+            steps.OpenShoppingList();
+            steps.DeleteProduct(PRODUCTNUMBER);
+            Assert.True(steps.IsDeletedProduct());
+        }
+
+        [Test]
+        public void CreateShoppingListWithoutAuthorization()
         {
             steps.OpenShoppingList();
-            steps.CreateShoppingListLogout();
-            Assert.True(steps.IsCreatedShoppingListLogout());
+            steps.CreateShoppingListWithoutAuthorization();
+            Assert.True(steps.IsCreatedShoppingListWithoutAuthorization());
         }
 
         [Test]
@@ -83,8 +87,8 @@ namespace TestIKEA.Tests
         {
             steps.LoginIKEA(USEREMAIL, PASSWORD);
             steps.OpenShoppingList();
-            steps.CreateShoppingList();
-            Assert.True(steps.IsCreatedShoppingList()); 
+            steps.CreateShoppingList(LISTNAME);
+            Assert.True(steps.IsCreatedShoppingList(LISTNAME)); 
             steps.DeleteShoppingList();
             steps.LogoutIKEA();
         }
@@ -94,7 +98,7 @@ namespace TestIKEA.Tests
         {
             steps.LoginIKEA(USEREMAIL, PASSWORD);
             steps.OpenShoppingList();
-            steps.CreateShoppingList();           
+            steps.CreateShoppingList(LISTNAME);           
             steps.DeleteShoppingList();
             Assert.True(steps.IsDeletedShoppingList()); 
             steps.LogoutIKEA();
@@ -105,37 +109,37 @@ namespace TestIKEA.Tests
         {
             steps.LoginIKEA(USEREMAIL, PASSWORD);
             steps.OpenShoppingList();
-            steps.CreateShoppingList();
-            steps.RenameShoppingList();
+            steps.CreateShoppingList(LISTNAME);
+            steps.RenameShoppingList(LISTNAME_2);
             Assert.True(steps.IsRenamedShoppingList());
             steps.LogoutIKEA();
         }
 
-        [Test]//+
+        [Test]
         public void ProductAvailabilityInStore()
         {
-            steps.ProductAvailability(FIRM, PRODUCT);
-            Assert.AreEqual(0, steps.IsProductAvailable(FIRM, PRODUCT));
+            steps.ProductAvailability(FIRM, PRODUCT, STORE_1);
+            Assert.True(steps.IsProductAvailable(FIRM, PRODUCT));
         }
 
         [Test]
         public void NavigationSite()
         { 
-            steps.Navigation();
-            Assert.True(steps.IsNavigation(TITLE));            
+            steps.GoToPage(PAGENAME);
+            Assert.True(steps.ItPassedToPage(PAGENAME));            
         }
 
         [Test]
-        public void UpdatePrivatePersonal()
+        public void ChangeUsername()
         {
             steps.LoginIKEA(USEREMAIL, PASSWORD);
-            steps.UpdatePrivatePersonal();
-            Assert.True(steps.IsUpdatedPrivatePersonal());
+            steps.ChangeUsername(USERNAME_2);
+            Assert.True(steps.IsUpdatedUsername());
             steps.LogoutIKEA();
         }
 
         [Test]
-        public void Updatestore()
+        public void UpdateNearestStore()
         {
             steps.LoginIKEA(USEREMAIL, PASSWORD);
             steps.UpdateStore(STORE_1);
@@ -145,19 +149,19 @@ namespace TestIKEA.Tests
         }
 
         [Test]
-        public void CompareProduct()
+        public void CompareTheFirstTwoProduct()
         {
             steps.SearchProduct(FIRM, "");
             steps.CompareProduct();
-            Assert.True(steps.IsCompareProduct());
+            Assert.True(steps.IsComparedProducts());
         }
 
         [Test]
         public void AddProductByNumber()
         {
             steps.OpenShoppingList();
-            steps.AddProductByNumber();
-            Assert.True(steps.IsaddedProductByNumber());
+            steps.AddProductByNumber(PRODUCTNUMBER);
+            Assert.True(steps.IsAddedProductByNumber());
         }
     }
 }

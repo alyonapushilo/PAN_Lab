@@ -34,7 +34,7 @@ namespace TestIKEA.Pages
             PageFactory.InitElements(this.driver, this);            
         }
 
-        public override void OpenPage()
+        public void OpenPage()
         {
             driver.Navigate().GoToUrl(BASE_URL);
         } 

@@ -18,15 +18,15 @@ namespace TestIKEA.Pages
             PageFactory.InitElements(this.driver, this);
         }
 
-        public override void OpenPage()
+        public void OpenPage()
         {
             driver.Navigate().GoToUrl(BASE_URL);
         }
 
-        public void Update()
+        public void Update(string username)
         {
             inputName.Clear();
-            inputName.SendKeys("test_user");
+            inputName.SendKeys(username);
             buttonSave.Click();
         }
     }

@@ -6,7 +6,7 @@ namespace TestIKEA.Pages
 {
     public class LoginPage:AbstractPage
     {
-        private const string BASE_URL = "https://secure.ikea.com/webapp/wcs/stores/servlet/LogonForm?storeId=23&langId=-31&catalogId=11001";
+        private const string BASE_URL = "https://secure.ikea.com/webapp/wcs/stores/servlet/LogonForm?storeId=23";
 
         [FindsBy(How = How.Id, Using = "login_logonId")]
         private IWebElement inputLogin;
@@ -23,7 +23,7 @@ namespace TestIKEA.Pages
             PageFactory.InitElements(this.driver, this);
         }
 
-        public override void OpenPage()
+        public void OpenPage()
         {
             driver.Navigate().GoToUrl(BASE_URL);
             Console.WriteLine("Login Page opened");
